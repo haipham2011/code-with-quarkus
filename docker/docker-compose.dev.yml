@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  quarkus-service:
+    image: example-quarkus
+    build:
+     context: ..
+     dockerfile: Dockerfile
+    command: mvn compile quarkus:dev -Dquarkus.live-reload.password=123
+    container_name: quarkus-hello
+    volumes:
+      - ../:/home/app
+      - ../.m2:/root/.m2
+    ports:
+      - 8080:8080
+    networks:
+      - container_network
+networks:
+  container_network:
+    name:
+      container_network
+    driver:
+      bridge
